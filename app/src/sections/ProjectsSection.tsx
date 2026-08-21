@@ -4,36 +4,6 @@ import { ShoppingCart, BarChart3, Globe, Heart, Github, Activity, Leaf, External
 
 const projects = [
   {
-    title: 'E-Commerce Platform',
-    description: 'A modern e-commerce platform built from the ground up using component-driven architecture and design system principles. Features responsive design, payment integration, and analytics tracking.',
-    icon: ShoppingCart,
-    metrics: [
-      { label: 'Engagement Increase', value: '25%' },
-      { label: 'Load Time Reduction', value: '30%' },
-    ],
-    technologies: ['React', 'Tailwind CSS', 'REST APIs', 'Payment Gateways'],
-    achievements: [
-      'Implemented responsive, mobile-first design ensuring seamless experience across all devices',
-      'Integrated payment processing APIs, analytics tracking, and third-party marketing tools',
-      'Optimized conversion funnels and checkout flows based on user behavior analytics',
-    ],
-  },
-  {
-    title: 'SaaS Web Application',
-    description: 'A scalable SaaS application with React frontend consuming Django REST APIs. Features real-time data updates, interactive dashboards, and comprehensive data visualization.',
-    icon: BarChart3,
-    metrics: [
-      { label: 'Load Time Reduction', value: '30%' },
-      { label: 'Development Speed', value: '40%' },
-    ],
-    technologies: ['React', 'Django', 'REST APIs', 'PostgreSQL'],
-    achievements: [
-      'Built reusable component library enabling rapid feature development and consistent UX',
-      'Implemented real-time data updates and interactive dashboards with data visualization',
-      'Achieved significant performance improvements through code splitting and caching strategies',
-    ],
-  },
-  {
     title: 'Travel & Hospitality Booking Platform',
     description: 'A full-featured travel and hospitality platform for The Bush Collection — an African safari company spanning Kenya and Tanzania.',
     icon: Globe,
@@ -47,6 +17,22 @@ const projects = [
       'Developed end-to-end booking flow with safari package selection, property browsing, and reservation management',
       'Integrated Cloudinary-powered media center for high-performance image delivery across destinations',
       'Built responsive, mobile-first UI showcasing 3+ destinations with immersive visuals and interactive maps',
+    ],
+  },
+  {
+    title: 'Mbuyu Watatu — Beach Retreat Landing Page',
+    description: 'An intimate beach sanctuary on the Kenyan coast — where ancient baobabs meet the Indian Ocean. Part of The Bush Collection family of private retreats.',
+    icon: Waves,
+    link: 'https://mbuyumarine.com/',
+    metrics: [
+      { label: 'Accommodation Types', value: '4' },
+      { label: 'Part of', value: 'Bush Collection' },
+    ],
+    technologies: ['React', 'Tailwind CSS', 'Cloudinary', 'Framer Motion', 'REST APIs'],
+    achievements: [
+      'Crafted an editorial luxury landing page for a coastal retreat in Shimoni, Kwale — with immersive hero, scroll animations, and cinematic imagery',
+      'Built accommodation showcase with room-type cards, live pricing, and a register-interest booking flow for Studio, 2-Bed, 3-Bed, and Safari Tent units',
+      'Implemented experiences section, photo gallery with Cloudinary-optimised assets, and a multi-channel contact form tied to The Bush Collection reservations team',
     ],
   },
   {
@@ -100,22 +86,7 @@ const projects = [
       'Designed editorial layout with serif typography, architectural grids, animated ticker, scroll reveal and sticky navigation',
     ],
   },
-  {
-    title: 'Mbuyu Watatu — Beach Retreat Landing Page',
-    description: 'An intimate beach sanctuary on the Kenyan coast — where ancient baobabs meet the Indian Ocean. Part of The Bush Collection family of private retreats.',
-    icon: Waves,
-    link: 'https://mbuyuwatatu.co.ke/',
-    metrics: [
-      { label: 'Accommodation Types', value: '4' },
-      { label: 'Part of', value: 'Bush Collection' },
-    ],
-    technologies: ['React', 'Tailwind CSS', 'Cloudinary', 'Framer Motion', 'REST APIs'],
-    achievements: [
-      'Crafted an editorial luxury landing page for a coastal retreat in Shimoni, Kwale — with immersive hero, scroll animations, and cinematic imagery',
-      'Built accommodation showcase with room-type cards, live pricing, and a register-interest booking flow for Studio, 2-Bed, 3-Bed, and Safari Tent units',
-      'Implemented experiences section, photo gallery with Cloudinary-optimised assets, and a multi-channel contact form tied to The Bush Collection reservations team',
-    ],
-  },
+  
 ];
 
 export function ProjectsSection() {
