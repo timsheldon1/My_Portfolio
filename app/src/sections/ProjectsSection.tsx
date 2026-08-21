@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, BarChart3, Globe, Heart, Github, Activity, Leaf, ExternalLink, Waves } from 'lucide-react';
+import { Globe, Heart, Github, Activity, Leaf, ExternalLink, Waves } from 'lucide-react';
 
 const projects = [
   {
