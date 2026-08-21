@@ -5,7 +5,7 @@ import { ShoppingCart, BarChart3, Globe, Heart, Github, Activity, Leaf, External
 const projects = [
   {
     title: 'Travel & Hospitality Booking Platform',
-    description: 'A full-featured travel and hospitality platform for The Bush Collection — an African safari company spanning Kenya and Tanzania.',
+    description: 'A full-featured travel and hospitality platform for The Bush Collection an African safari company spanning Kenya and Tanzania.',
     icon: Globe,
     link: 'https://thebushcollection.africa/',
     metrics: [
@@ -21,7 +21,7 @@ const projects = [
   },
   {
     title: 'Mbuyu Watatu — Beach Retreat Landing Page',
-    description: 'An intimate beach sanctuary on the Kenyan coast — where ancient baobabs meet the Indian Ocean. Part of The Bush Collection family of private retreats.',
+    description: 'An intimate beach sanctuary on the Kenyan coast, where ancient baobabs meet the Indian Ocean. Part of The Bush Collection family of private retreats.',
     icon: Waves,
     link: 'https://mbuyumarine.com/',
     metrics: [
@@ -30,7 +30,7 @@ const projects = [
     ],
     technologies: ['React', 'Tailwind CSS', 'Cloudinary', 'Framer Motion', 'REST APIs'],
     achievements: [
-      'Crafted an editorial luxury landing page for a coastal retreat in Shimoni, Kwale — with immersive hero, scroll animations, and cinematic imagery',
+      'Crafted an editorial luxury landing page for a coastal retreat in Shimoni, Kwale, with immersive hero, scroll animations, and cinematic imagery',
       'Built accommodation showcase with room-type cards, live pricing, and a register-interest booking flow for Studio, 2-Bed, 3-Bed, and Safari Tent units',
       'Implemented experiences section, photo gallery with Cloudinary-optimised assets, and a multi-channel contact form tied to The Bush Collection reservations team',
     ],
