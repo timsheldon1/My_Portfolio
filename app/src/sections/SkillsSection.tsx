@@ -14,7 +14,7 @@ const skillCategories = [
   {
     icon: Code2,
     title: 'Frontend Frameworks',
-    skills: ['React.js', 'Next.js', 'JavaScript (ES6+)', 'Node.js', 'HTML5', 'CSS3'],
+    skills: ['React.js', 'Next.js', 'TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3'],
   },
   {
     icon: Palette,
@@ -39,7 +39,7 @@ const skillCategories = [
   {
     icon: Server,
     title: 'Backend Knowledge',
-    skills: ['Django', 'Python', 'PHP', 'PostgreSQL', 'MySQL', 'NoSQL'],
+    skills: ['Node.js', 'Express.js', 'Django', 'Python', 'PHP', 'PostgreSQL', 'MySQL', 'NoSQL'],
   },
 ];
 

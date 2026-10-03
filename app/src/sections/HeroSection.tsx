@@ -59,7 +59,7 @@ export function HeroSection() {
           variants={itemVariants}
           className="text-[#a09890] text-xs uppercase tracking-[0.3em] mb-8 font-medium"
         >
-          Front-End Engineer — Nairobi, Kenya
+          Front-End Engineer based in Nairobi, Kenya
         </motion.p>
 
         {/* Serif headline */}

@@ -6,6 +6,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useScrollFade } from '@/hooks/useScrollFade';
 import { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import { toast } from 'sonner';
 
 const EMAILJS_SERVICE_ID = 'service_r4gyrx8';
 const EMAILJS_TEMPLATE_CONTACT = 'template_85lj8pm';      // Template: Contact Us → you
@@ -15,14 +16,14 @@ const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string || 
 // Initialise EmailJS once at module load
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
-const contactInfo = [
+const contactInfo: { icon: typeof Phone; label: string; value: string; href?: string }[] = [
   { icon: Phone, label: 'Phone', value: '+254 791 058 879', href: 'tel:+254791058879' },
   { icon: Mail, label: 'Email', value: 'timsheldonoure1@gmail.com', href: 'mailto:timsheldonoure1@gmail.com' },
-  { icon: MapPin, label: 'Location', value: 'Nairobi, Kenya', href: '#' },
+  { icon: MapPin, label: 'Location', value: 'Nairobi, Kenya' },
 ];
 
 const socialLinks = [
-  { icon: Github, label: 'GitHub', href: 'https://github.com/iou123456' },
+  { icon: Github, label: 'GitHub', href: 'https://github.com/timsheldon1' },
   { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/timsheldon-oure/' },
 ];
 
@@ -37,7 +38,8 @@ export function ContactSection() {
     if (!formRef.current) return;
     setIsSubmitting(true);
 
-    const formData = new FormData(formRef.current);
+    const form = formRef.current;
+    const formData = new FormData(form);
 
     try {
       // 1) Send the contact message to you
@@ -47,21 +49,28 @@ export function ContactSection() {
         subject: formData.get('subject') as string,
         message: formData.get('message') as string,
       });
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      setIsSubmitting(false);
+      toast.error('Something went wrong while sending your message. Please try again later.');
+      return;
+    }
 
-      // 2) Send auto-reply confirmation to the visitor
+    // The message is delivered at this point, so report success and clear the form
+    // even if the auto-reply fails; otherwise the visitor might resend a duplicate.
+    setIsSubmitting(false);
+    toast.success('Thank you for your message! I will get back to you soon.');
+    form.reset();
+
+    // 2) Send auto-reply confirmation to the visitor
+    try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_AUTOREPLY, {
         user_name: formData.get('user_name') as string,
         user_email: formData.get('user_email') as string,
         subject: formData.get('subject') as string,
       });
-
-      setIsSubmitting(false);
-      alert('Thank you for your message! I will get back to you soon.');
-      formRef.current.reset();
     } catch (err) {
-      console.error('EmailJS error:', err);
-      setIsSubmitting(false);
-      alert('Something went wrong while sending your message. Please try again later.');
+      console.error('EmailJS auto-reply error:', err);
     }
   };
 
@@ -126,25 +135,37 @@ export function ContactSection() {
               variants={itemVariants}
               className="text-text-secondary text-sm leading-relaxed mb-10"
             >
-              Feel free to reach out through any of the channels below — or simply fill in the form.
+              Feel free to reach out through any of the channels below, or simply fill in the form.
             </motion.p>
 
             {/* Contact Details */}
             <motion.div variants={itemVariants} className="space-y-0 divide-y divide-dark-tertiary/50 border-t border-b border-dark-tertiary/50 mb-10">
-              {contactInfo.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  className="flex items-center gap-4 py-4 group"
-                >
-                  <item.icon className="w-4 h-4 text-accent-warm flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-text-tertiary text-xs uppercase tracking-wider mb-0.5">{item.label}</p>
-                    <p className="text-text-primary text-sm group-hover:text-accent-warm transition-colors">{item.value}</p>
+              {contactInfo.map((item, index) => {
+                const content = (
+                  <>
+                    <item.icon className="w-4 h-4 text-accent-warm flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-text-tertiary text-xs uppercase tracking-wider mb-0.5">{item.label}</p>
+                      <p className={`text-text-primary text-sm ${item.href ? 'group-hover:text-accent-warm transition-colors' : ''}`}>{item.value}</p>
+                    </div>
+                  </>
+                );
+
+                return item.href ? (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="flex items-center gap-4 py-4 group"
+                  >
+                    {content}
+                    <ArrowUpRight className="w-3 h-3 text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                ) : (
+                  <div key={index} className="flex items-center gap-4 py-4">
+                    {content}
                   </div>
-                  <ArrowUpRight className="w-3 h-3 text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity" />
-                </a>
-              ))}
+                );
+              })}
             </motion.div>
 
             {/* Social Links */}
@@ -175,8 +196,9 @@ export function ContactSection() {
               <div className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-text-tertiary text-xs uppercase tracking-wider mb-3">Name</label>
+                    <label htmlFor="contact-name" className="block text-text-tertiary text-xs uppercase tracking-wider mb-3">Name</label>
                     <Input
+                      id="contact-name"
                       name="user_name"
                       type="text"
                       placeholder="Your name"
@@ -185,8 +207,9 @@ export function ContactSection() {
                     />
                   </div>
                   <div>
-                    <label className="block text-text-tertiary text-xs uppercase tracking-wider mb-3">Email</label>
+                    <label htmlFor="contact-email" className="block text-text-tertiary text-xs uppercase tracking-wider mb-3">Email</label>
                     <Input
+                      id="contact-email"
                       name="user_email"
                       type="email"
                       placeholder="your@email.com"
@@ -197,8 +220,9 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-text-tertiary text-xs uppercase tracking-wider mb-3">Subject</label>
+                  <label htmlFor="contact-subject" className="block text-text-tertiary text-xs uppercase tracking-wider mb-3">Subject</label>
                   <Input
+                    id="contact-subject"
                     name="subject"
                     type="text"
                     placeholder="Project inquiry"
@@ -208,8 +232,9 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-text-tertiary text-xs uppercase tracking-wider mb-3">Message</label>
+                  <label htmlFor="contact-message" className="block text-text-tertiary text-xs uppercase tracking-wider mb-3">Message</label>
                   <Textarea
+                    id="contact-message"
                     name="message"
                     placeholder="Tell me about your project..."
                     required

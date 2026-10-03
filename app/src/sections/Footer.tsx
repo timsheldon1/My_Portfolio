@@ -3,13 +3,14 @@ import { Github, Linkedin, Mail } from 'lucide-react';
 const quickLinks = [
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
-  { name: 'Services', href: '#experience' },
+  { name: 'What I Do', href: '#experience' },
   { name: 'Projects', href: '#projects' },
+  { name: 'Education', href: '#education' },
   { name: 'Contact', href: '#contact' },
 ];
 
 const socialLinks = [
-  { icon: Github, href: 'https://github.com/iou123456', label: 'GitHub' },
+  { icon: Github, href: 'https://github.com/timsheldon1', label: 'GitHub' },
   { icon: Linkedin, href: 'https://www.linkedin.com/in/timsheldon-oure/', label: 'LinkedIn' },
   { icon: Mail, href: 'mailto:timsheldonoure1@gmail.com', label: 'Email' },
 ];
@@ -31,7 +32,7 @@ export function Footer() {
             <a href="#" className="font-serif text-xl text-text-primary inline-block mb-1">
               Timsheldon<span className="text-accent-warm">.</span>
             </a>
-            <p className="text-text-tertiary text-xs uppercase tracking-wider">React Developer — Nairobi</p>
+            <p className="text-text-tertiary text-xs uppercase tracking-wider">React Developer based in Nairobi</p>
           </div>
 
           {/* Quick Links */}

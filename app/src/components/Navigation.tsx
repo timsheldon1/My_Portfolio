@@ -8,6 +8,7 @@ const navLinks = [
   { name: 'Skills', href: '#skills' },
   { name: 'What I Do', href: '#experience' },
   { name: 'Projects', href: '#projects' },
+  { name: 'Education', href: '#education' },
   { name: 'Contact', href: '#contact' },
 ];
 
@@ -44,7 +45,7 @@ export function Navigation() {
         <nav className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-end h-16 md:h-20">
 
-            {/* Hamburger button — always visible */}
+            {/* Hamburger button - always visible */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="pointer-events-auto relative z-[60] w-10 h-10 flex flex-col items-center justify-center gap-[6px] group"
@@ -120,10 +121,11 @@ export function Navigation() {
                 className="flex items-center gap-6 mt-10"
               >
                 <a
-                  href="https://github.com/iou123456"
+                  href="https://github.com/timsheldon1"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#7a716a] hover:text-[#f5f0e8] transition-colors"
+                  aria-label="GitHub"
                 >
                   <Github className="w-5 h-5" />
                 </a>
@@ -132,6 +134,7 @@ export function Navigation() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#7a716a] hover:text-[#f5f0e8] transition-colors"
+                  aria-label="LinkedIn"
                 >
                   <Linkedin className="w-5 h-5" />
                 </a>

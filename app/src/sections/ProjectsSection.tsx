@@ -5,7 +5,7 @@ import { Globe, Heart, Github, Activity, Leaf, ExternalLink, Waves } from 'lucid
 const projects = [
   {
     title: 'Travel & Hospitality Booking Platform',
-    description: 'A full-featured travel and hospitality platform for The Bush Collection an African safari company spanning Kenya and Tanzania.',
+    description: 'A full-featured travel and hospitality platform for The Bush Collection, an African safari company spanning Kenya and Tanzania.',
     icon: Globe,
     link: 'https://thebushcollection.africa/',
     metrics: [
@@ -20,17 +20,17 @@ const projects = [
     ],
   },
   {
-    title: 'Mbuyu Watatu — Beach Retreat Landing Page',
+    title: 'Mbuyu Watatu: Beach Retreat Landing Page',
     description: 'An intimate beach sanctuary on the Kenyan coast, where ancient baobabs meet the Indian Ocean. Part of The Bush Collection family of private retreats.',
     icon: Waves,
-    link: 'https://mbuyumarine.com/',
+    link: 'https://mbuyuwatatu.co.ke/',
     metrics: [
       { label: 'Accommodation Types', value: '4' },
       { label: 'Part of', value: 'Bush Collection' },
     ],
     technologies: ['React', 'Tailwind CSS', 'Cloudinary', 'Framer Motion', 'REST APIs'],
     achievements: [
-      'Crafted an editorial luxury landing page for a coastal retreat in Shimoni, Kwale, with immersive hero, scroll animations, and cinematic imagery',
+      'Crafted an editorial luxury landing page for a coastal retreat in Shimoni, Kwale, featuring an immersive hero, scroll animations, and cinematic imagery',
       'Built accommodation showcase with room-type cards, live pricing, and a register-interest booking flow for Studio, 2-Bed, 3-Bed, and Safari Tent units',
       'Implemented experiences section, photo gallery with Cloudinary-optimised assets, and a multi-channel contact form tied to The Bush Collection reservations team',
     ],
@@ -40,7 +40,7 @@ const projects = [
     description: 'A modern, responsive donor dashboard for charity organizations to track donations, manage donors, and monitor campaigns.',
     icon: Heart,
     link: 'https://charity-donor-dashborad.netlify.app/',
-    github: 'https://github.com/iou123456/charity-donor-dashboard',
+    github: 'https://github.com/timsheldon1/charity-donor-dashboard',
     metrics: [
       { label: 'Total Donations Tracked', value: '$24K+' },
       { label: 'Active Donors', value: '1,248' },
@@ -57,7 +57,6 @@ const projects = [
     description: 'A responsive single-page patient dashboard that dynamically renders healthcare data via the Coalition Technologies Patient Data API.',
     icon: Activity,
     link: 'https://patientdatadashboard.netlify.app/',
-    github: 'https://github.com/iou123456/HTML-with-API-Integration',
     metrics: [
       { label: 'API-Driven Views', value: '5+' },
       { label: 'Vital Signs Tracked', value: '3' },
@@ -70,11 +69,11 @@ const projects = [
     ],
   },
   {
-    title: "Meemo's Naturals — Brand Website",
+    title: "Meemo's Naturals: Brand Website",
     description: 'A luxury editorial brochure website for Meemo\'s Naturals, a natural wellness food brand. Built as a fully static single-page site with zero dependencies.',
     icon: Leaf,
     link: 'https://meemo-s-naturals.vercel.app/',
-    github: 'https://github.com/iou123456/Meemo-s-Naturals',
+    github: 'https://github.com/timsheldon1/Meemo-s-Naturals',
     metrics: [
       { label: 'Static Pages', value: 'Zero deps' },
       { label: 'Hosting Ready', value: 'Vercel / Netlify' },
@@ -86,7 +85,6 @@ const projects = [
       'Designed editorial layout with serif typography, architectural grids, animated ticker, scroll reveal and sticky navigation',
     ],
   },
-  
 ];
 
 export function ProjectsSection() {
@@ -115,12 +113,12 @@ export function ProjectsSection() {
       className="relative bg-[#1a1714]"
       style={{ height: `${projects.length * 100}vh` }}
     >
-      {/* Sticky full-screen container — one seamless dark background */}
+      {/* Sticky full-screen container - one seamless dark background */}
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Split layout — left number fixed, right content transitions */}
+        {/* Split layout - left number fixed, right content transitions */}
         <div className="h-full flex flex-col md:flex-row">
 
-          {/* ─── LEFT SIDE — giant number, completely static ─── */}
+          {/* ─── LEFT SIDE - giant number, completely static ─── */}
           <div className="hidden md:flex md:w-[40%] lg:w-[38%] h-full items-center justify-center pl-8 lg:pl-16">
             <AnimatePresence mode="wait">
               <motion.span
@@ -140,9 +138,9 @@ export function ProjectsSection() {
             </AnimatePresence>
           </div>
 
-          {/* ─── RIGHT SIDE — scrolling project content ─── */}
+          {/* ─── RIGHT SIDE - scrolling project content ─── */}
           <div className="flex-1 md:w-[60%] lg:w-[62%] h-full flex flex-col">
-            {/* Top bar — tech tags + category badge */}
+            {/* Top bar - tech tags + category badge */}
             <AnimatePresence mode="wait">
               <motion.div
                 key={`top-${activeIndex}`}
@@ -171,7 +169,7 @@ export function ProjectsSection() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Main content area — title + project details */}
+            {/* Main content area - title + project details */}
             <div className="flex-1 flex flex-col px-6 lg:px-10 min-h-0">
               <AnimatePresence mode="wait">
                 <motion.div

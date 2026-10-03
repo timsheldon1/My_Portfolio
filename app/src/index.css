@@ -46,12 +46,12 @@
 }
 
 @layer utilities {
-  /* Editorial accent text — warm brown */
+  /* Editorial accent text - warm brown */
   .accent-text {
     color: #a0897a;
   }
   
-  /* Legacy class — now maps to accent color for backward compat */
+  /* Legacy class - now maps to accent color for backward compat */
   .gradient-text {
     color: #a0897a;
     -webkit-text-fill-color: #a0897a;
@@ -62,7 +62,7 @@
   }
 }
 
-/* Custom scrollbar — minimal */
+/* Custom scrollbar - minimal */
 ::-webkit-scrollbar {
   width: 6px;
 }

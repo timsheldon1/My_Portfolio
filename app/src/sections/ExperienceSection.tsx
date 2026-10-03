@@ -8,7 +8,7 @@ const services = [
     icon: Code2,
     title: 'Front-End Development',
     description:
-      'Building modern, interactive web applications with React, TypeScript, and Tailwind CSS — clean component architecture, reusable design systems, and pixel-perfect execution.',
+      'Building modern, interactive web applications with React, TypeScript, and Tailwind CSS, with clean component architecture, reusable design systems, and pixel-perfect execution.',
   },
   {
     icon: Palette,
@@ -26,7 +26,7 @@ const services = [
     icon: Smartphone,
     title: 'Responsive & Mobile-First',
     description:
-      'Crafting layouts that look and feel great on every screen — from mobile phones to ultra-wide monitors — using modern CSS and adaptive design patterns.',
+      'Crafting layouts that look and feel great on every screen, from mobile phones to ultra-wide monitors, using modern CSS and adaptive design patterns.',
   },
   {
     icon: Globe,
@@ -38,7 +38,7 @@ const services = [
     icon: Blocks,
     title: 'Static Sites & Brochure Websites',
     description:
-      'Delivering lightweight, zero-dependency static sites and brand websites — optimized for speed, SEO, and instant deployment on Vercel, Netlify, or GitHub Pages.',
+      'Delivering lightweight, zero-dependency static sites and brand websites, optimized for speed, SEO, and instant deployment on Vercel, Netlify, or GitHub Pages.',
   },
 ];
 

@@ -7,6 +7,7 @@ import { ProjectsSection } from '@/sections/ProjectsSection';
 import { EducationSection } from '@/sections/EducationSection';
 import { ContactSection } from '@/sections/ContactSection';
 import { Footer } from '@/sections/Footer';
+import { Toaster } from '@/components/ui/sonner';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <ContactSection />
       </main>
       <Footer />
+      <Toaster position="bottom-center" />
     </div>
   );
 }

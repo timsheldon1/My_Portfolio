@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useScroll, useTransform, type MotionValue } from 'framer-motion';
 
 interface UseScrollFadeOptions {
-  /** How faint the text starts — 0 is invisible, 1 is fully visible. Default 0.12 */
+  /** How faint the text starts - 0 is invisible, 1 is fully visible. Default 0.12 */
   startOpacity?: number;
   /** Where in the viewport the fade begins (0 = top, 1 = bottom). Default 0.95 */
   offsetStart?: number;
