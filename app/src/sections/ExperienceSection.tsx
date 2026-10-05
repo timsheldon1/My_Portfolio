@@ -70,7 +70,7 @@ export function ExperienceSection() {
 
   return (
     <section
-      id="experience"
+      id="services"
       ref={sectionRef}
       className="py-24 md:py-36 bg-dark-primary"
     >

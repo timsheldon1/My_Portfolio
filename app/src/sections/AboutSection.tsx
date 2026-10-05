@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
-import { Code2, Briefcase, Users, Rocket } from 'lucide-react';
+import { Code2, Briefcase, Users, Globe } from 'lucide-react';
 import { AnimatedCounter } from '@/components/AnimatedCounter';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useScrollFade } from '@/hooks/useScrollFade';
+import { personalNote } from '@/data/profile';
 
 const stats = [
-  { icon: Briefcase, value: 3, suffix: '+', label: 'Years Experience' },
+  { icon: Briefcase, value: 3, suffix: '+', label: 'Years Full-Time' },
   { icon: Code2, value: 15, suffix: '+', label: 'Projects Completed' },
   { icon: Users, value: 4, suffix: '', label: 'Companies Worked' },
-  { icon: Rocket, value: 100, suffix: '%', label: 'Commitment' },
+  { icon: Globe, value: 6, suffix: '', label: 'Live Sites in Portfolio' },
 ];
 
 export function AboutSection() {
@@ -63,13 +64,13 @@ export function AboutSection() {
               variants={itemVariants}
               className="font-serif text-3xl md:text-4xl lg:text-5xl text-text-primary mb-8 leading-[1.1]"
             >
-              Product-focused{' '}
-              <span className="text-accent-warm">React Developer</span> with a passion for excellence
+              Product-minded{' '}
+              <span className="text-accent-warm">Full Stack Developer</span> with a front-end focus
             </motion.h2>
 
             <motion.div ref={bodyRef} style={{ opacity: bodyOpacity }} variants={itemVariants} className="space-y-5 text-text-secondary leading-relaxed text-[15px]">
               <p>
-                With over <span className="text-text-primary font-medium">3 years of experience</span>, I specialize 
+                With over <span className="text-text-primary font-medium">3 years of full-time experience</span>, I specialize 
                 in building responsive, high-performance web applications using modern React patterns and 
                 component-driven architecture.
               </p>
@@ -82,6 +83,7 @@ export function AboutSection() {
                 Experienced in startup environments, I excel at shipping fast, iterating quickly, and taking 
                 ownership of product development from concept to deployment.
               </p>
+              {personalNote && <p>{personalNote}</p>}
             </motion.div>
           </div>
 

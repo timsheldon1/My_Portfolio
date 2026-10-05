@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, Linkedin } from 'lucide-react';
+import { workHistory } from '@/data/profile';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
-  { name: 'What I Do', href: '#experience' },
+  ...(workHistory.length > 0 ? [{ name: 'Experience', href: '#experience' }] : []),
+  { name: 'What I Do', href: '#services' },
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
   { name: 'Contact', href: '#contact' },

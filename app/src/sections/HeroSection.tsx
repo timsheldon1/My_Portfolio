@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
-import { ChevronDown, ArrowRight } from 'lucide-react';
+import { ChevronDown, ArrowRight, FileText } from 'lucide-react';
 import { useTypewriter } from '@/hooks/useTypewriter';
+import { availability, resumeUrl } from '@/data/profile';
 
 export function HeroSection() {
   const { displayText, showCursor } = useTypewriter({
-    text: 'React Developer',
+    text: 'Front-end focused, full-stack capable',
     speed: 80,
     delay: 500,
   });
@@ -54,12 +55,26 @@ export function HeroSection() {
         animate="visible"
         className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8"
       >
+        {/* Availability */}
+        {availability && (
+          <motion.div
+            variants={itemVariants}
+            className="inline-flex items-center gap-2.5 border border-[#5a524a] px-3.5 py-1.5 mb-8 text-[11px] uppercase tracking-[0.2em] text-[#c9c2b8]"
+          >
+            <span className="relative flex w-2 h-2">
+              <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-60 animate-ping" />
+              <span className="relative inline-flex w-2 h-2 rounded-full bg-emerald-400" />
+            </span>
+            {availability}
+          </motion.div>
+        )}
+
         {/* Eyebrow */}
         <motion.p
           variants={itemVariants}
           className="text-[#a09890] text-xs uppercase tracking-[0.3em] mb-8 font-medium"
         >
-          Front-End Engineer based in Nairobi, Kenya
+          Full Stack Developer based in Nairobi, Kenya
         </motion.p>
 
         {/* Serif headline */}
@@ -132,6 +147,17 @@ export function HeroSection() {
             View My Work
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
+          {resumeUrl && (
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 text-[#c9c2b8] hover:text-[#f5f0e8] text-xs uppercase tracking-[0.2em] font-semibold transition-colors"
+            >
+              Résumé
+              <FileText className="w-4 h-4" />
+            </a>
+          )}
         </motion.div>
       </motion.div>
 

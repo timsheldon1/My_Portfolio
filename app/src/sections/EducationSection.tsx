@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { GraduationCap, BookOpen, Code, Database, Layout, Users } from 'lucide-react';
+import { GraduationCap, BookOpen, Code, Database, Layout, Users, Cloud, Award } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useScrollFade } from '@/hooks/useScrollFade';
 
@@ -9,6 +9,11 @@ const coursework = [
   { name: 'Database Systems', icon: Database },
   { name: 'UI/UX Design', icon: Layout },
   { name: 'Agile Methodologies', icon: Users },
+];
+
+const certifications = [
+  { name: 'AWS Cloud Practitioner Essentials', icon: Cloud },
+  { name: 'Agile/Scrum Methodologies', icon: Award },
 ];
 
 export function EducationSection() {
@@ -84,6 +89,24 @@ export function EducationSection() {
                     <course.icon className="w-4 h-4 text-accent-warm" />
                     <span className="text-sm">{course.name}</span>
                   </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Professional development */}
+            <div className="mt-10">
+              <p className="text-text-tertiary text-xs uppercase tracking-[0.2em] mb-5">
+                Professional Development
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {certifications.map((cert) => (
+                  <div
+                    key={cert.name}
+                    className="flex items-center gap-2 px-4 py-2 border border-dark-tertiary bg-dark-primary/50 text-text-secondary"
+                  >
+                    <cert.icon className="w-4 h-4 text-accent-warm" />
+                    <span className="text-sm">{cert.name}</span>
+                  </div>
                 ))}
               </div>
             </div>

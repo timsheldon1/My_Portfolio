@@ -1,9 +1,11 @@
 import { Github, Linkedin, Mail } from 'lucide-react';
+import { workHistory } from '@/data/profile';
 
 const quickLinks = [
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
-  { name: 'What I Do', href: '#experience' },
+  ...(workHistory.length > 0 ? [{ name: 'Experience', href: '#experience' }] : []),
+  { name: 'What I Do', href: '#services' },
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
   { name: 'Contact', href: '#contact' },
@@ -32,7 +34,7 @@ export function Footer() {
             <a href="#" className="font-serif text-xl text-text-primary inline-block mb-1">
               Timsheldon<span className="text-accent-warm">.</span>
             </a>
-            <p className="text-text-tertiary text-xs uppercase tracking-wider">React Developer based in Nairobi</p>
+            <p className="text-text-tertiary text-xs uppercase tracking-wider">Full Stack Developer based in Nairobi</p>
           </div>
 
           {/* Quick Links */}

@@ -1,28 +1,56 @@
-import { useRef, useState } from 'react';
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { Globe, Heart, Github, Activity, Leaf, ExternalLink, Waves } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Globe, Heart, Github, Activity, Leaf, ExternalLink, Waves, GraduationCap, ArrowUpRight } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
-const projects = [
+interface Project {
+  title: string;
+  category: string;
+  description: string;
+  icon: LucideIcon;
+  /** Screenshot in public/projects/; projects without one get a styled placeholder */
+  image?: string;
+  link?: string;
+  github?: string;
+  metrics: { label: string; value: string }[];
+  technologies: string[];
+  achievements: string[];
+  caseStudy?: { problem: string; decisions: string[] };
+}
+
+const projects: Project[] = [
   {
-    title: 'Travel & Hospitality Booking Platform',
-    description: 'A full-featured travel and hospitality platform for The Bush Collection, an African safari company spanning Kenya and Tanzania.',
+    title: 'The Bush Collection: Safari Booking Platform',
+    category: 'Full-stack platform',
+    description: 'A booking platform for a collection of African safari lodges and beach properties. Guests browse properties, book rooms and packages, and pay online, while staff manage listings, rates and reservations from an admin dashboard.',
     icon: Globe,
     link: 'https://thebushcollection.africa/',
+    github: 'https://github.com/timsheldon1/TBCFinall-',
     metrics: [
       { label: 'Happy Travelers', value: '1,000+' },
       { label: 'Average Rating', value: '4.8★' },
     ],
-    technologies: ['React', 'Tailwind CSS', 'Cloudinary', 'REST APIs', 'Booking Engine'],
+    technologies: ['React', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS', 'Pesapal'],
     achievements: [
-      'Developed end-to-end booking flow with safari package selection, property browsing, and reservation management',
-      'Integrated Cloudinary-powered media center for high-performance image delivery across destinations',
-      'Built responsive, mobile-first UI showcasing 3+ destinations with immersive visuals and interactive maps',
+      'Built the guest booking flow: properties and rooms with seasonal, guest-count-aware pricing, booked and paid for online via Pesapal',
+      'Built the Express API on MongoDB with separate JWT-protected user and admin routes, login rate limiting, and Swagger docs',
+      'Automated booking confirmations with server-generated PDF receipts sent by email',
+      'Gave staff an admin dashboard for properties, rooms, packages, media and reviews, so listings change without code changes',
     ],
+    caseStudy: {
+      problem: 'Small hospitality groups often juggle several properties across spreadsheets, WhatsApp and manual invoicing. This platform replaces that with one system: a public site where guests book directly, and an admin side for running the properties.',
+      decisions: [
+        'Chose MongoDB over Postgres because a beach villa and a bush lodge rarely share the same amenity or media structure, and enforced cross-record consistency in application code instead.',
+        'Kept users and admins as separate models and route sets rather than one collection with a role flag, so a user token can never reach admin-only data.',
+        'Used an explicit CORS allowlist on the payments API instead of a wildcard, accepting a redeploy whenever a new frontend domain is added.',
+      ],
+    },
   },
   {
     title: 'Mbuyu Watatu: Beach Retreat Landing Page',
+    category: 'Landing page',
     description: 'An intimate beach sanctuary on the Kenyan coast, where ancient baobabs meet the Indian Ocean. Part of The Bush Collection family of private retreats.',
     icon: Waves,
+    image: '/projects/mbuyu.webp',
     link: 'https://mbuyuwatatu.co.ke/',
     metrics: [
       { label: 'Accommodation Types', value: '4' },
@@ -36,9 +64,29 @@ const projects = [
     ],
   },
   {
+    title: 'FundiClass: Vocational Learning Platform',
+    category: 'Product, pre-launch',
+    description: "A vocational and entrepreneurial video-learning platform for Kenya's Jua Kali sector, youth and upcoming technicians, currently taking waitlist sign-ups ahead of launch.",
+    icon: GraduationCap,
+    link: 'https://fundi-class-luhd.vercel.app/',
+    github: 'https://github.com/timsheldon1/FundiClass',
+    metrics: [
+      { label: 'Course Tracks', value: '3' },
+      { label: 'Stage', value: 'Waitlist' },
+    ],
+    technologies: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+    achievements: [
+      'Built the launch site in Next.js with a course catalogue across technical trades, agribusiness, and business & digital skills',
+      'Implemented waitlist sign-up through a Next.js API route that validates Safaricom numbers and stores leads in Supabase',
+      'Wrote the product story around its users: offline viewing, M-Pesa pricing, and Sheng, Kiswahili and English content',
+    ],
+  },
+  {
     title: 'Charity Donor Dashboard',
+    category: 'Dashboard',
     description: 'A modern, responsive donor dashboard for charity organizations to track donations, manage donors, and monitor campaigns.',
     icon: Heart,
+    image: '/projects/charity.webp',
     link: 'https://charity-donor-dashborad.netlify.app/',
     github: 'https://github.com/timsheldon1/charity-donor-dashboard',
     metrics: [
@@ -54,6 +102,7 @@ const projects = [
   },
   {
     title: 'Patient Data Dashboard',
+    category: 'API dashboard',
     description: 'A responsive single-page patient dashboard that dynamically renders healthcare data via the Coalition Technologies Patient Data API.',
     icon: Activity,
     link: 'https://patientdatadashboard.netlify.app/',
@@ -70,8 +119,10 @@ const projects = [
   },
   {
     title: "Meemo's Naturals: Brand Website",
+    category: 'Brand website',
     description: 'A luxury editorial brochure website for Meemo\'s Naturals, a natural wellness food brand. Built as a fully static single-page site with zero dependencies.',
     icon: Leaf,
+    image: '/projects/meemo.webp',
     link: 'https://meemo-s-naturals.vercel.app/',
     github: 'https://github.com/timsheldon1/Meemo-s-Naturals',
     metrics: [
@@ -87,150 +138,111 @@ const projects = [
   },
 ];
 
+const outlineNumber = {
+  color: 'rgba(160, 137, 122, 0.12)',
+  WebkitTextStroke: '1px rgba(160, 137, 122, 0.45)',
+};
+
+function ProjectVisual({ project, number }: { project: Project; number: string }) {
+  const inner = project.image ? (
+    <img
+      src={project.image}
+      alt={`Screenshot of ${project.title}`}
+      loading="lazy"
+      width={1200}
+      height={750}
+      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
+    />
+  ) : (
+    <div className="w-full h-full flex flex-col items-center justify-center gap-5 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.06)_1px,transparent_0)] [background-size:22px_22px]">
+      <project.icon className="w-10 h-10 text-[#a0897a]" strokeWidth={1.25} />
+      <span className="font-serif text-6xl leading-none" style={outlineNumber}>{number}</span>
+      {project.link && (
+        <span className="text-[11px] font-mono uppercase tracking-widest text-[#7a716a]">
+          {new URL(project.link).hostname.replace(/^www\./, '')}
+        </span>
+      )}
+    </div>
+  );
+
+  const frame = 'block aspect-[16/10] overflow-hidden border border-[#3d3530] bg-[#221e1a] group';
+
+  return project.link ? (
+    <a href={project.link} target="_blank" rel="noopener noreferrer" className={frame} aria-label={`Open ${project.title} live site`}>
+      {inner}
+    </a>
+  ) : (
+    <div className={frame}>{inner}</div>
+  );
+}
+
 export function ProjectsSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
-
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    const index = Math.min(
-      Math.floor(latest * projects.length),
-      projects.length - 1
-    );
-    setActiveIndex(index);
-  });
-
-  const activeProject = projects[activeIndex];
-
   return (
-    <section
-      id="projects"
-      ref={sectionRef}
-      className="relative bg-[#1a1714]"
-      style={{ height: `${projects.length * 100}vh` }}
-    >
-      {/* Sticky full-screen container - one seamless dark background */}
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Split layout - left number fixed, right content transitions */}
-        <div className="h-full flex flex-col md:flex-row">
-
-          {/* ─── LEFT SIDE - giant number, completely static ─── */}
-          <div className="hidden md:flex md:w-[40%] lg:w-[38%] h-full items-center justify-center pl-8 lg:pl-16">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={activeIndex}
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="font-serif text-[clamp(10rem,18vw,20rem)] leading-none select-none"
-                style={{
-                  color: 'rgba(160, 137, 122, 0.12)',
-                  WebkitTextStroke: '1.5px rgba(160, 137, 122, 0.35)',
-                }}
-              >
-                {String(activeIndex + 1).padStart(2, '0')}
-              </motion.span>
-            </AnimatePresence>
+    <section id="projects" className="py-24 md:py-36 bg-[#1a1714]">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 md:mb-24"
+        >
+          <div>
+            <p className="text-[#a0897a] text-xs uppercase tracking-[0.3em] font-medium mb-6">
+              Selected Work
+            </p>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-[#f5f0e8]">
+              Projects
+            </h2>
           </div>
+          <p className="text-[#7a716a] max-w-sm text-sm leading-relaxed">
+            Production sites for real clients, plus the dashboards and products I build to sharpen my craft.
+          </p>
+        </motion.div>
 
-          {/* ─── RIGHT SIDE - scrolling project content ─── */}
-          <div className="flex-1 md:w-[60%] lg:w-[62%] h-full flex flex-col">
-            {/* Top bar - tech tags + category badge */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`top-${activeIndex}`}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-                className="flex-shrink-0 flex items-center justify-between px-6 lg:px-10 pt-8 pb-4"
+        {/* Project list */}
+        <div className="space-y-24 md:space-y-32">
+          {projects.map((project, index) => {
+            const number = String(index + 1).padStart(2, '0');
+            const flip = index % 2 === 1;
+
+            return (
+              <motion.article
+                key={project.title}
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start"
               >
-                {/* Subtitle / category */}
-                <p className="text-[#a09890] text-xs sm:text-sm tracking-wide">
-                  {activeProject.description.split('.')[0]}.
-                </p>
-                {/* Tech tags inline */}
-                <div className="hidden lg:flex items-center gap-2">
-                  {activeProject.technologies.slice(0, 4).map((tech, i) => (
-                    <span
-                      key={i}
-                      className="text-[11px] font-mono text-[#7a716a] tracking-wide"
-                    >
-                      {i > 0 && <span className="mr-2 text-[#3d3530]">|</span>}
-                      {tech}
-                    </span>
-                  ))}
+                {/* Visual */}
+                <div className={`lg:col-span-7 ${flip ? 'lg:order-2' : ''}`}>
+                  <ProjectVisual project={project} number={number} />
                 </div>
-              </motion.div>
-            </AnimatePresence>
 
-            {/* Main content area - title + project details */}
-            <div className="flex-1 flex flex-col px-6 lg:px-10 min-h-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`content-${activeIndex}`}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.45, ease: 'easeOut' }}
-                  className="flex-1 flex flex-col"
-                >
-                  {/* Mobile number */}
-                  <span
-                    className="md:hidden font-serif text-7xl text-transparent block mb-2"
-                    style={{
-                      color: 'rgba(160, 137, 122, 0.12)',
-                      WebkitTextStroke: '1px rgba(160, 137, 122, 0.35)',
-                    }}
-                  >
-                    {String(activeIndex + 1).padStart(2, '0')}
-                  </span>
-
-                  {/* Project title + action links */}
-                  <div className="flex items-start justify-between gap-6 mb-8">
-                    <h3 className="font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-[#f5f0e8] leading-[1.1] max-w-2xl">
-                      {activeProject.title}
-                    </h3>
-                    <div className="flex items-center gap-4 flex-shrink-0 mt-2 sm:mt-3">
-                      {'github' in activeProject && activeProject.github && (
-                        <a
-                          href={activeProject.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-[#7a716a] hover:text-[#f5f0e8] transition-colors group"
-                          aria-label="View source on GitHub"
-                        >
-                          <Github className="w-5 h-5" />
-                          <span className="hidden sm:inline text-[11px] font-mono uppercase tracking-wider group-hover:text-[#f5f0e8]">Code</span>
-                        </a>
-                      )}
-                      {'link' in activeProject && activeProject.link && (
-                        <a
-                          href={activeProject.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-[#a0897a] hover:text-[#f5f0e8] transition-colors group"
-                          aria-label="View live site"
-                        >
-                          <ExternalLink className="w-5 h-5" />
-                          <span className="hidden sm:inline text-[11px] font-mono uppercase tracking-wider group-hover:text-[#f5f0e8]">Live</span>
-                        </a>
-                      )}
-                    </div>
+                {/* Details */}
+                <div className={`lg:col-span-5 ${flip ? 'lg:order-1' : ''}`}>
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="font-serif text-4xl leading-none" style={outlineNumber}>{number}</span>
+                    <span className="text-[11px] font-mono uppercase tracking-widest text-[#a0897a]">
+                      {project.category}
+                    </span>
                   </div>
 
+                  <h3 className="font-serif text-2xl sm:text-3xl text-[#f5f0e8] leading-[1.15] mb-4">
+                    {project.title}
+                  </h3>
+
+                  <p className="text-[#a09890] text-sm leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+
                   {/* Metrics */}
-                  <div className="flex flex-wrap items-center gap-x-10 gap-y-3 mb-8">
-                    {activeProject.metrics.map((metric, i) => (
-                      <div key={i}>
-                        <span className="block text-2xl font-serif text-[#a0897a]">
-                          {metric.value}
-                        </span>
+                  <div className="flex flex-wrap gap-x-10 gap-y-3 mb-6">
+                    {project.metrics.map((metric) => (
+                      <div key={metric.label}>
+                        <span className="block text-xl font-serif text-[#a0897a]">{metric.value}</span>
                         <span className="text-[#7a716a] text-[10px] uppercase tracking-widest font-mono">
                           {metric.label}
                         </span>
@@ -239,49 +251,96 @@ export function ProjectsSection() {
                   </div>
 
                   {/* Achievements */}
-                  <ul className="space-y-2 mb-8 max-w-xl">
-                    {activeProject.achievements.map((achievement, i) => (
-                      <li key={i} className="flex items-start gap-3 text-[#a09890] text-sm leading-relaxed">
-                        <span className="w-1 h-1 rounded-full bg-[#a0897a] mt-[7px] flex-shrink-0" />
+                  <ul className="space-y-2 mb-6">
+                    {project.achievements.map((achievement) => (
+                      <li key={achievement} className="flex items-start gap-3 text-[#a09890] text-sm leading-relaxed">
+                        <span className="w-1 h-1 rounded-full bg-[#a0897a] mt-[9px] flex-shrink-0" />
                         <span>{achievement}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* Mobile tech tags */}
-                  <div className="lg:hidden flex flex-wrap gap-2 mb-6">
-                    {activeProject.technologies.map((tech, i) => (
+                  {/* Case study */}
+                  {project.caseStudy && (
+                    <details className="group/case mb-6 border-t border-b border-[#3d3530] py-4">
+                      <summary className="cursor-pointer list-none flex items-center justify-between text-[11px] font-mono uppercase tracking-widest text-[#c9c2b8] hover:text-[#f5f0e8]">
+                        Case study: the problem &amp; key decisions
+                        <span className="text-[#a0897a] transition-transform group-open/case:rotate-45 text-base leading-none">+</span>
+                      </summary>
+                      <div className="pt-4 space-y-4 text-sm leading-relaxed text-[#a09890]">
+                        <p>
+                          <span className="block text-[10px] font-mono uppercase tracking-widest text-[#7a716a] mb-1">Problem</span>
+                          {project.caseStudy.problem}
+                        </p>
+                        <div>
+                          <span className="block text-[10px] font-mono uppercase tracking-widest text-[#7a716a] mb-2">Decisions &amp; trade-offs</span>
+                          <ul className="space-y-2">
+                            {project.caseStudy.decisions.map((decision) => (
+                              <li key={decision} className="flex items-start gap-3">
+                                <span className="text-[#a0897a] flex-shrink-0">→</span>
+                                <span>{decision}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </details>
+                  )}
+
+                  {/* Tech tags */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.technologies.map((tech) => (
                       <span
-                        key={i}
+                        key={tech}
                         className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-[#7a716a] border border-[#3d3530] rounded-full"
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
 
-            {/* Bottom progress indicator */}
-            <div className="flex-shrink-0 px-6 lg:px-10 pb-8 flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                {projects.map((_, i) => (
-                  <div
-                    key={i}
-                    className={`rounded-full transition-all duration-300 ${
-                      i === activeIndex
-                        ? 'w-8 h-1 bg-[#a0897a]'
-                        : 'w-2 h-1 bg-[#3d3530]'
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="text-[#7a716a] text-[11px] font-mono">
-                {String(activeIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-              </span>
-            </div>
-          </div>
+                  {/* Links */}
+                  <div className="flex items-center gap-6">
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-[#a0897a] hover:text-[#f5f0e8] transition-colors text-[11px] font-mono uppercase tracking-wider"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        Live site
+                      </a>
+                    )}
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-[#7a716a] hover:text-[#f5f0e8] transition-colors text-[11px] font-mono uppercase tracking-wider"
+                      >
+                        <Github className="w-4 h-4" />
+                        Code
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+
+        {/* Archive link */}
+        <div className="mt-24 pt-10 border-t border-[#3d3530] flex justify-center">
+          <a
+            href="https://github.com/timsheldon1?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-2 text-[#c9c2b8] hover:text-[#f5f0e8] text-xs uppercase tracking-[0.2em] font-semibold transition-colors"
+          >
+            More projects on GitHub
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
         </div>
       </div>
     </section>

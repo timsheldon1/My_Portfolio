@@ -14,7 +14,7 @@ const skillCategories = [
   {
     icon: Code2,
     title: 'Frontend Frameworks',
-    skills: ['React.js', 'Next.js', 'TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3'],
+    skills: ['React.js', 'Next.js', 'Vue.js', 'Redux', 'TypeScript', 'JavaScript (ES6+)', 'HTML5', 'CSS3'],
   },
   {
     icon: Palette,
@@ -29,17 +29,17 @@ const skillCategories = [
   {
     icon: Plug,
     title: 'API Integration',
-    skills: ['REST APIs', 'Backend Integration', 'Third-Party Service Integration'],
+    skills: ['REST APIs', 'Authentication & RBAC', 'Payment Integrations', 'Anthropic API / LLM Integration', 'Third-Party Service Integration'],
   },
   {
     icon: Wrench,
-    title: 'Development Tools',
-    skills: ['Git/GitHub', 'NPM', 'Visual Studio Code', 'Docker', 'Agile/Scrum'],
+    title: 'Testing & Delivery',
+    skills: ['Git/GitHub', 'Jest', 'React Testing Library', 'CI/CD', 'Docker', 'WCAG Accessibility', 'Agile/Scrum'],
   },
   {
     icon: Server,
     title: 'Backend Knowledge',
-    skills: ['Node.js', 'Express.js', 'Django', 'Python', 'PHP', 'PostgreSQL', 'MySQL', 'NoSQL'],
+    skills: ['Node.js', 'Express.js', 'Python', 'Django', 'MongoDB', 'PostgreSQL', 'MySQL', 'PHP'],
   },
 ];
 
