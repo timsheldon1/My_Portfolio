@@ -39,7 +39,7 @@ export const workHistory: Job[] = [
   {
     role: 'Web Developer',
     company: 'The Bush Collection',
-    url: 'https://thebushcollection.africa/',
+    url: 'https://thebushcollection.vercel.app/',
     period: 'Jan 2025 - Oct 2026',
     location: 'Nairobi, Kenya / Remote',
     highlights: [

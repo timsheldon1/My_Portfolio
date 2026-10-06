@@ -23,7 +23,8 @@ const projects: Project[] = [
     category: 'Full-stack platform',
     description: 'A booking platform for a collection of African safari lodges and beach properties. Guests browse properties, book rooms and packages, and pay online, while staff manage listings, rates and reservations from an admin dashboard.',
     icon: Globe,
-    link: 'https://thebushcollection.africa/',
+    image: '/projects/bushcollection.webp',
+    link: 'https://thebushcollection.vercel.app/',
     github: 'https://github.com/timsheldon1/TBCFinall-',
     metrics: [
       { label: 'Happy Travelers', value: '1,000+' },
